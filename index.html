@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30X — Caracterización</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black:  #000000;
+    --yellow: #E9FF7B;
+    --yhover: #D9E565;
+    --ystroke:#BABF56;
+    --ydim:   rgba(233,255,123,0.10);
+    --ydim2:  rgba(233,255,123,0.04);
+    --white:  #FFFFFF;
+    --s1: #0D0D0D;
+    --s2: #141414;
+    --s3: #1C1C1C;
+    --border:  rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --t1: #FFFFFF;
+    --t2: rgba(255,255,255,0.60);
+    --t3: rgba(255,255,255,0.30);
+    --t4: rgba(255,255,255,0.15);
+    --red:    #FF5C5C;
+    --orange: #FFAA5C;
+    --green:  #7BFF9E;
+    --blue:   #7BB8FF;
+    --purple: #C07BFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--t1);
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--black);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--yellow);
+    letter-spacing: -0.5px;
+    text-decoration: none;
+  }
+
+  .logo-pipe { width: 1px; height: 18px; background: var(--border2); }
+
+  .logo-sub {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--t3);
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+
+  nav { display: flex; gap: 2px; }
+
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--t3);
+    padding: 7px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .nav-btn:hover   { background: var(--s2); color: var(--t1); }
+  .nav-btn.active  { color: var(--yellow); background: var(--ydim2); }
+
+  /* ── LAYOUT ── */
+  main { max-width: 1080px; margin: 0 auto; padding: 44px 32px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .page-title {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .page-sub { font-size: 14px; color: var(--t3); margin-bottom: 32px; }
+
+  /* ── FORMS ── */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .fg { margin-bottom: 14px; }
+
+  label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: var(--t3);
+    margin-bottom: 7px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  select, textarea {
+    width: 100%;
+    background: var(--s2);
+    border: 1px solid var(--border2);
+    border-radius: 9px;
+    padding: 10px 14px;
+    color: var(--t1);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--ystroke);
+    background: var(--s1);
+  }
+  select { cursor: pointer; }
+  select option { background: var(--s3); }
+  textarea { min-height: 180px; resize: vertical; line-height: 1.6; }
+
+  /* ── DROP ZONE ── */
+  .drop-zone {
+    border: 1.5px dashed var(--border2);
+    border-radius: 10px;
+    padding: 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--s1);
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--ystroke);
+    background: var(--ydim2);
+  }
+  .drop-zone .dz-icon { font-size: 24px; margin-bottom: 8px; opacity: 0.5; }
+  .drop-zone p { color: var(--t3); font-size: 13px; }
+  .drop-zone .cta-text { color: var(--yellow); font-weight: 600; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    color: var(--t4);
+    font-size: 12px;
+    margin: 18px 0;
+    position: relative;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 46%;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider::before { left: 0; }
+  .divider::after  { right: 0; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    background: var(--yellow);
+    border: 2px solid var(--ystroke);
+    border-radius: 10px;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.1px;
+  }
+  .btn:hover    { background: var(--yhover); transform: translateY(-1px); }
+  .btn:active   { transform: translateY(0); }
+  .btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+  .btn-full     { width: 100%; justify-content: center; }
+
+  .btn-ghost {
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--t2);
+    border-radius: 9px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .btn-ghost:hover { border-color: var(--t3); color: var(--t1); background: var(--s2); }
+
+  .btn-yellow-sm {
+    background: var(--yellow);
+    border: 2px solid var(--ystroke);
+    border-radius: 8px;
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 7px 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn-yellow-sm:hover { background: var(--yhover); }
+
+  .btn-danger {
+    background: none;
+    border: 1px solid rgba(255,92,92,0.25);
+    color: var(--red);
+    border-radius: 9px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .btn-danger:hover { background: rgba(255,92,92,0.08); }
+
+  /* ── API STRIP ── */
+  .api-strip {
+    background: var(--s1);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .api-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+  .api-dot.ok { background: var(--green); }
+  .api-strip input { flex: 1; margin: 0; font-size: 13px; }
+
+  /* ── LOADING ── */
+  .loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 400;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    backdrop-filter: blur(8px);
+  }
+  .loading-overlay.show { display: flex; }
+
+  .spinner {
+    width: 36px; height: 36px;
+    border: 2px solid var(--border2);
+    border-top-color: var(--yellow);
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-msg {
+    font-size: 14px;
+    color: var(--t3);
+    text-align: center;
+    max-width: 260px;
+    line-height: 1.6;
+  }
+
+  /* ── RESULT BLOCK ── */
+  .result-wrap {
+    margin-top: 32px;
+    border: 1px solid var(--border2);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .result-hero {
+    background: var(--s1);
+    padding: 28px 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Geometric shapes — 30X style */
+  .result-hero::after {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 180px; height: 220px;
+    border-radius: 50%;
+    border: 1px solid var(--yellow);
+    opacity: 0.12;
+    pointer-events: none;
+  }
+  .result-hero::before {
+    content: '';
+    position: absolute;
+    bottom: -70px; right: 100px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 1px solid var(--yellow);
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .result-name {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    margin-bottom: 10px;
+  }
+
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .badge {
+    border-radius: 5px;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+  .bg-gray   { background: var(--s3);                      color: var(--t2); }
+  .bg-yellow { background: var(--ydim);  border: 1px solid rgba(233,255,123,0.2); color: var(--yellow); }
+  .bg-red    { background: rgba(255,92,92,0.10);   color: var(--red); }
+  .bg-orange { background: rgba(255,170,92,0.10);  color: var(--orange); }
+  .bg-green  { background: rgba(123,255,158,0.10); color: var(--green); }
+
+  .fit-block  { text-align: right; flex-shrink: 0; }
+  .fit-label  { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--t3); margin-bottom: 2px; }
+  .fit-val    { font-size: 42px; font-weight: 800; color: var(--yellow); line-height: 1; letter-spacing: -2px; }
+  .fit-denom  { font-size: 16px; font-weight: 400; color: var(--t3); }
+
+  .summary-box {
+    padding: 14px 32px;
+    background: var(--ydim2);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--t2);
+    line-height: 1.65;
+  }
+
+  /* ── ANALYSIS GRID ── */
+  .analysis-body { padding: 24px 32px; background: var(--s1); }
+
+  .a-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .a-card {
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 20px;
+    transition: border-color 0.15s;
+  }
+  .a-card:hover { border-color: var(--border2); }
+  .a-card.full  { grid-column: 1 / -1; }
+
+  .a-title {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .a-bar { width: 3px; height: 11px; border-radius: 2px; flex-shrink: 0; }
+
+  .sub-l {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--t4);
+    margin-top: 14px;
+    margin-bottom: 8px;
+  }
+  .sub-l:first-child { margin-top: 0; }
+
+  ul.blist { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  ul.blist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--t2);
+    line-height: 1.55;
+  }
+  ul.blist li::before {
+    content: '›';
+    color: var(--yellow);
+    flex-shrink: 0;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    background: var(--s2);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    padding: 3px 9px;
+    font-size: 12px;
+    color: var(--t2);
+  }
+
+  .profile-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .pitem { background: var(--s2); border-radius: 8px; padding: 10px 12px; }
+  .pitem .pl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--t4); margin-bottom: 3px; }
+  .pitem .pv { font-size: 13px; font-weight: 600; color: var(--t1); }
+
+  .quote-list { display: flex; flex-direction: column; gap: 9px; }
+  .quote {
+    border-left: 2.5px solid var(--yellow);
+    padding: 9px 13px;
+    border-radius: 0 7px 7px 0;
+    background: var(--s2);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--t2);
+    line-height: 1.6;
+  }
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .score-lbl  { font-size: 11px; color: var(--t3); white-space: nowrap; }
+  .score-track { flex: 1; height: 4px; background: var(--s3); border-radius: 2px; overflow: hidden; }
+  .score-fill  { height: 100%; background: var(--yellow); border-radius: 2px; width: 0%; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+  .score-num   { font-size: 13px; font-weight: 700; color: var(--yellow); width: 28px; text-align: right; }
+
+  .rec-card {
+    grid-column: 1 / -1;
+    background: var(--ydim2);
+    border: 1px solid rgba(233,255,123,0.15);
+    border-radius: 11px;
+    padding: 20px;
+  }
+
+  /* ── DASHBOARD ── */
+  .dash-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    gap: 16px;
+  }
+  .dash-right { display: flex; align-items: center; gap: 10px; }
+
+  .view-toggle {
+    background: var(--s1);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 3px;
+    display: flex;
+    gap: 2px;
+  }
+  .vt {
+    background: none;
+    border: none;
+    color: var(--t3);
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .vt:hover   { color: var(--t2); }
+  .vt.active  { background: var(--s3); color: var(--yellow); }
+
+  /* STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    border: 1px solid var(--yellow);
+    opacity: 0.06;
+  }
+  .stat-val { font-size: 30px; font-weight: 800; color: var(--yellow); letter-spacing: -1px; line-height: 1; }
+  .stat-lbl { font-size: 12px; color: var(--t3); margin-top: 5px; }
+
+  /* FILTERS */
+  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+  .chip {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 13px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--t3);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .chip:hover  { border-color: var(--border2); color: var(--t2); }
+  .chip.active { background: var(--ydim); border-color: rgba(233,255,123,0.25); color: var(--yellow); }
+
+  /* ── CARDS VIEW ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .person-card {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    flex-direction: column;
+  }
+  .person-card:hover {
+    border-color: rgba(233,255,123,0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+  }
+
+  .card-top-bar { height: 2px; background: var(--yellow); width: 100%; }
+
+  .card-body { padding: 16px 18px; flex: 1; display: flex; flex-direction: column; }
+
+  .card-name    { font-size: 15px; font-weight: 800; letter-spacing: -0.2px; margin-bottom: 2px; }
+  .card-company { font-size: 12px; color: var(--t3); margin-bottom: 10px; }
+
+  .card-badges  { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+
+  .card-summary {
+    font-size: 12px;
+    color: var(--t3);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  .card-quote {
+    background: var(--black);
+    border-left: 2px solid var(--yellow);
+    padding: 7px 10px;
+    border-radius: 0 5px 5px 0;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--t3);
+    line-height: 1.55;
+    margin-bottom: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Profile mini pills */
+  .card-profile { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+  .cpill {
+    background: var(--s2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--t3);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .card-footer {
+    border-top: 1px solid var(--border);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--black);
+  }
+
+  .urgency-row { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; }
+  .udot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .u-alta   .udot { background: var(--red); }
+  .u-alta   .ulbl { color: var(--red); }
+  .u-media  .udot { background: var(--orange); }
+  .u-media  .ulbl { color: var(--orange); }
+  .u-baja   .udot { background: var(--green); }
+  .u-baja   .ulbl { color: var(--green); }
+
+  .card-score { font-size: 20px; font-weight: 800; color: var(--yellow); letter-spacing: -0.5px; }
+  .card-score-d { font-size: 12px; font-weight: 400; color: var(--t3); }
+
+  /* ── TABLE VIEW ── */
+  .table-wrap {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    overflow: hidden;
+  }
+  .table-bar {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .search-box {
+    background: var(--black);
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    padding: 7px 12px;
+    color: var(--t1);
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    width: 240px;
+    transition: border-color 0.15s;
+  }
+  .search-box:focus { border-color: var(--ystroke); }
+  .tcount { font-size: 12px; color: var(--t3); margin-left: auto; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: var(--black);
+    padding: 11px 16px;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--t4);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  tbody tr:hover { background: var(--s2); }
+  tbody tr:last-child { border-bottom: none; }
+  td { padding: 13px 16px; font-size: 13px; }
+  .td-name { font-weight: 700; font-size: 14px; }
+  .td-co   { font-size: 11px; color: var(--t3); margin-top: 2px; }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    text-align: center;
+    padding: 72px 20px;
+  }
+  .empty-icon  { font-size: 36px; margin-bottom: 14px; opacity: 0.3; }
+  .empty-title { font-size: 15px; font-weight: 700; color: var(--t2); margin-bottom: 6px; }
+  .empty-sub   { font-size: 13px; color: var(--t3); }
+
+  /* ── MODAL ── */
+  .modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+  }
+  .modal-bg.show { display: flex; }
+
+  .modal {
+    background: var(--s1);
+    border: 1px solid var(--border2);
+    border-radius: 16px;
+    max-width: 900px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border2) transparent;
+  }
+
+  .modal-hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--s1);
+    z-index: 10;
+  }
+
+  .modal-x {
+    background: var(--s3);
+    border: 1px solid var(--border2);
+    border-radius: 7px;
+    color: var(--t3);
+    font-size: 18px;
+    cursor: pointer;
+    width: 32px; height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    line-height: 1;
+  }
+  .modal-x:hover { color: var(--t1); border-color: var(--t3); }
+
+  /* ── SETTINGS ── */
+  .settings-wrap { max-width: 540px; }
+  .s-card {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 22px;
+    margin-bottom: 16px;
+  }
+  .s-title { font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--s2);
+    border: 1px solid var(--border2);
+    border-radius: 9px;
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--t1);
+    z-index: 500;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+    max-width: 300px;
+  }
+  .toast.show    { transform: translateY(0); opacity: 1; }
+  .toast.success { border-color: rgba(123,255,158,0.3); }
+  .toast.error   { border-color: rgba(255,92,92,0.3); }
+
+  .upload-wrap { max-width: 660px; margin: 0 auto; }
+
+  /* ── HVM TIER BADGES ── */
+  .tier-aplus { background: var(--yellow); color: #000; font-weight: 800; }
+  .tier-a     { background: var(--ydim);  border: 1px solid rgba(233,255,123,0.3); color: var(--yellow); }
+  .tier-b     { background: var(--s3);    color: var(--t2); }
+  .tier-c     { background: #111;         border: 1px solid var(--border); color: var(--t4); }
+
+  /* ── STATUS PILL ── */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .status-pending { background: rgba(255,170,92,0.1); color: var(--orange); }
+  .status-done    { background: rgba(123,255,158,0.1); color: var(--green); }
+
+  /* ── CARD META ROW ── */
+  .card-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--t3);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .card-link:hover { color: var(--yellow); }
+
+  .rev-tag {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--t4);
+    background: var(--s3);
+    border-radius: 4px;
+    padding: 2px 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── TIER FILTER ROW ── */
+  .filter-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--t4);
+    margin-right: 4px;
+    align-self: center;
+  }
+
+  @media (max-width: 820px) {
+    main         { padding: 24px 16px; }
+    header       { padding: 0 16px; }
+    .form-row    { grid-template-columns: 1fr; }
+    .a-grid      { grid-template-columns: 1fr; }
+    .stats-grid  { grid-template-columns: 1fr 1fr; }
+    .profile-2   { grid-template-columns: 1fr; }
+    .cards-grid  { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .cards-grid  { grid-template-columns: 1fr; }
+    .stats-grid  { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    30X
+    <div class="logo-pipe"></div>
+    <span class="logo-sub">Caracterización</span>
+  </div>
+  <nav>
+    <button class="nav-btn active" onclick="nav('upload')">+ Analizar</button>
+    <button class="nav-btn" onclick="nav('dashboard')">Dashboard</button>
+    <button class="nav-btn" onclick="nav('settings')">Ajustes</button>
+  </nav>
+</header>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-msg" id="loadingMsg">Analizando transcript...</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="detailModal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div>
+        <div id="modalName" style="font-size:18px;font-weight:800;letter-spacing:-0.3px"></div>
+        <div id="modalBadges" class="badge-row" style="margin-top:7px"></div>
+      </div>
+      <button class="modal-x" onclick="closeModal()">×</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ═══════ UPLOAD ═══════ -->
+  <section class="section active" id="section-upload">
+    <div class="upload-wrap">
+      <h1 class="page-title">Analizar Transcript</h1>
+      <p class="page-sub">Pega el texto o sube un archivo. La IA extrae necesidades, perfil y frases clave.</p>
+
+      <div class="api-strip">
+        <div class="api-dot" id="apiDot"></div>
+        <input type="password" id="apiKeyInput" placeholder="API Key de Anthropic · sk-ant-..." />
+        <button class="btn-yellow-sm" onclick="saveApiKey()">Guardar</button>
+      </div>
+
+      <div class="form-row" style="margin-bottom:14px">
+        <div class="fg" style="margin:0">
+          <label>Nombre</label>
+          <input type="text" id="personName" placeholder="Ej: Ana Torres" />
+        </div>
+        <div class="fg" style="margin:0">
+          <label>Empresa</label>
+          <input type="text" id="personCompany" placeholder="Ej: Grupo Torres" />
+        </div>
+      </div>
+
+      <div class="fg">
+        <label>Programa de interés</label>
+        <select id="programSelect">
+          <option value="">Sin especificar</option>
+        </select>
+      </div>
+
+      <div class="fg">
+        <label>Subir archivo (.txt, .md)</label>
+        <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+          <div class="dz-icon">📄</div>
+          <p><span class="cta-text">Haz clic</span> o arrastra tu archivo aquí · TXT, MD</p>
+        </div>
+        <input type="file" id="fileInput" accept=".txt,.md" style="display:none" onchange="handleFile(event)" />
+      </div>
+
+      <div class="divider">o pega el texto directamente</div>
+
+      <div class="fg">
+        <label>Transcript / Conversación</label>
+        <textarea id="transcriptText" placeholder="Pega aquí el transcript completo de la llamada o conversación..."></textarea>
+      </div>
+
+      <button class="btn btn-full" id="analyzeBtn" onclick="analyzeTranscript()">
+        ✦ &nbsp;Analizar con IA
+      </button>
+
+      <div id="analysisResult"></div>
+    </div>
+  </section>
+
+  <!-- ═══════ DASHBOARD ═══════ -->
+  <section class="section" id="section-dashboard">
+
+    <div class="dash-top">
+      <div>
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-sub" style="margin-bottom:0">Todos los perfiles caracterizados.</p>
+      </div>
+      <div class="dash-right">
+        <div class="view-toggle">
+          <button class="vt active" id="vt-cards" onclick="setView('cards')">Cards</button>
+          <button class="vt"        id="vt-table" onclick="setView('table')">Tabla</button>
+        </div>
+        <button class="btn-ghost" onclick="exportCSV()">↓ CSV</button>
+        <button class="btn"       onclick="nav('upload')">+ Nuevo</button>
+      </div>
+    </div>
+
+    <div class="stats-grid" id="statsGrid"></div>
+    <div class="filter-row" id="filterRow"></div>
+
+    <!-- CARD VIEW -->
+    <div id="cardsView">
+      <div class="cards-grid" id="cardsGrid"></div>
+    </div>
+
+    <!-- TABLE VIEW (hidden by default) -->
+    <div id="tableView" style="display:none">
+      <div class="table-wrap">
+        <div class="table-bar">
+          <input class="search-box" type="text" id="searchBox" placeholder="Buscar nombre, empresa..." oninput="onSearch()" />
+          <span class="tcount" id="tableCount"></span>
+        </div>
+        <div id="tableBody"></div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════ SETTINGS ═══════ -->
+  <section class="section" id="section-settings">
+    <div class="settings-wrap">
+      <h1 class="page-title">Ajustes</h1>
+      <p class="page-sub">API Key y configuración de programas.</p>
+
+      <div class="s-card">
+        <div class="s-title">API Key de Anthropic</div>
+        <p style="font-size:12px;color:var(--t3);margin-bottom:12px">
+          Obtén tu clave en <strong style="color:var(--t2)">console.anthropic.com</strong> · Se guarda solo en este navegador.
+        </p>
+        <div class="fg" style="margin-bottom:12px">
+          <input type="password" id="settingsKey" placeholder="sk-ant-api03-..." />
+        </div>
+        <button class="btn" onclick="saveKeySettings()">Guardar API Key</button>
+      </div>
+
+      <div class="s-card">
+        <div class="s-title">Programas de 30X</div>
+        <p style="font-size:12px;color:var(--t3);margin-bottom:12px">Uno por línea.</p>
+        <div class="fg" style="margin-bottom:12px">
+          <textarea id="programsText" style="min-height:200px"></textarea>
+        </div>
+        <button class="btn" onclick="savePrograms()">Guardar</button>
+      </div>
+
+      <div class="s-card">
+        <div class="s-title">Datos</div>
+        <p style="font-size:13px;color:var(--t3);margin-bottom:14px">
+          <strong id="settingsCount" style="color:var(--t1)">0</strong> perfiles guardados localmente.
+        </p>
+        <button class="btn-danger" onclick="clearData()">Eliminar todos los datos</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// ══════════════════════════════════════════
+// SEED DATA — HVM Export
+// ══════════════════════════════════════════
+const HVM_SEED_DATA = [{"id":1776811162201,"name":"Ernesto Kruger","company":"Kruger Corporation","program":"Sin especificar","date":"2026-04-16T23:07:27.847964+00:00","urgency_level":"alta","program_fit_score":8,"short_summary":"Ernesto Kruger, CEO & Founding Partner en Kruger Corporation. primary/secondary education. Pozuelo de Alarcón, ES.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"CEO / Fundador de alto impacto","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Aunque la caracterización inicial marca under_200k, la evidencia cruzada de LinkedIn Company para Kruger Corp muestra una corporación fundada en 1993, 357 empleados, presencia en más de 20 países y oferta clara de consultoría tecnológica/digital, lo que hace más consistente inferir un rango de…"},"key_phrases":["CEO y Founder Kruger Corporation con una maleta y un beeper"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"a_plus","hvm_score":"33","email":"ernesto@krugercorp.com","linkedin":"https://www.linkedin.com/in/ernestokruger/","revenue_range":"5m_20m","industry":"primary/secondary education","city":"Pozuelo de Alarcón","country":"ES","transcript":""},{"id":1776811162202,"name":"Edgar Eduardo Carrasco","company":"Ferrenacional","program":"Sin especificar","date":"2026-04-16T23:07:11.606824+00:00","urgency_level":"alta","program_fit_score":8,"short_summary":"Edgar Eduardo Carrasco, Director / Gerente en Ferrenacional. RetailTech. Mexico City, MX.","explicit_needs":{"problems":["Mentoría estratégica","Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo","Alianzas estratégicas"],"objectives":["Mentoría estratégica","Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo","Alianzas estratégicas"]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":["Mentoría estratégica","Crecimiento y ventas","Marketing y posicionamiento"],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Empresario consolidado en expansión","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin participación previa con 30X"],"summary":"[LLM] Se toma como base el dato auto-reportado de ingresos anuales de $6.66M USD, que mapea a revenue_range=5m_20m, signal_revenue=3 y r1=4. El prospecto se reporta como Fundador CEO y además Apollo/LinkedIn lo muestran como CEO con seniority c_suite, por lo que tiene poder de decisión total sobre p…"},"key_phrases":["CEO  en Ferrenacional · Ex Amazon · Ex Mercado Libre ·  Stanford GSB LEAD"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"a","hvm_score":"31","email":"edgarcarrasco11@gmail.com","linkedin":"http://www.linkedin.com/in/edgarcarrasco","revenue_range":"5m_20m","industry":"RetailTech","city":"Mexico City","country":"MX","transcript":""},{"id":1776811162203,"name":"Alvaro Puerto Valencia","company":"SIES Salud","program":"Sin especificar","date":"2026-04-16T23:06:15.209066+00:00","urgency_level":"media","program_fit_score":7,"short_summary":"Alvaro Puerto Valencia, Presidente & Co-fundador en SIES Salud. government administration. Bogotá, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Se toma el rango de facturación provisto (2m_5m), por lo que signal_revenue=2 y r1_revenue=3. Alvaro es Presidente y cofundador de SIES Salud desde 2009, así que tiene poder claro de decisión presupuestal (2). La empresa opera en salud/servicios B2B escalables, con 25 sedes nacionales, 829 emp…"},"key_phrases":["Presidente de SIES Salud S.A. | Liderazgo | Salud | Desarrollo | País"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"28","email":"puertojr@me.com","linkedin":"https://www.linkedin.com/in/alvaro-puerto-valencia-siessalud/","revenue_range":"2m_5m","industry":"government administration","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162204,"name":"Daniel Ceballos","company":"La Ofrenda","program":"Sin especificar","date":"2026-04-16T23:06:48.585385+00:00","urgency_level":"alta","program_fit_score":7,"short_summary":"Daniel Ceballos, Director / Fundador en La Ofrenda. individual & family services. Pereira, CO.","explicit_needs":{"problems":["Mentoría estratégica","Crecimiento y ventas","Marketing y posicionamiento","Alianzas estratégicas","Internacionalización | La compañía tiene como objetivo fortalecer su principal linea de negocio","los planes unipersonales y fidelizar los mismos","crear nuevas unidades de venta."],"objectives":["Mentoría estratégica","Crecimiento y ventas","Marketing y posicionamiento","Alianzas estratégicas","Internacionalización"]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":["Mentoría estratégica","Crecimiento y ventas","Marketing y posicionamiento"],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Empresario consolidado en expansión","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X"],"summary":"[LLM] Se toma revenue_range=5m_20m por dato auto-reportado de ingresos anuales de USD 13,666,656, consistente con una empresa consolidada. Daniel figura como fundador/socio y gerente general/director, por lo que tiene poder alto de decisión sobre presupuesto. No hay evidencia de inversión previa en…"},"key_phrases":["Negociador Internacional\n","La compañía tiene como objetivo fortalecer su principal linea de negocio, los planes unipersonales y fidelizar los mismos, crear nuevas unidades de venta."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"a","hvm_score":"27","email":"daniel.ceballos95@gmail.com","linkedin":"https://linkedin.com/in/daniel-ceballos-96280a94","revenue_range":"5m_20m","industry":"individual & family services","city":"Pereira","country":"CO","transcript":""},{"id":1776811162205,"name":"Santiago Velasquez","company":"EyeSyght","program":"Sin especificar","date":"2026-04-16T23:11:15.080437+00:00","urgency_level":"alta","program_fit_score":6,"short_summary":"Santiago Velasquez, Founder and CEO en EyeSyght. semiconductors. Brisbane, AU.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Empresario consolidado en expansión","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X"],"summary":"[LLM] Se priorizó la empresa operativa consistente entre LinkedIn Profile y LinkedIn Company: Hailo Solutions, donde figura como Founder & CTO y la compañía tiene 7 empleados en IT/consulting con propuesta clara de accesibilidad en transporte, por lo que el revenue se estima conservadoramente en 200…"},"key_phrases":["Founder & CEO EyeSyght & Hailo | 2022 Churchill Fellow | Australian delegate to the United Nations | Key note speaker | Entrepreneur | Innovator | Disability (lived experience) advocate"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"a","hvm_score":"26","email":"gerencia@construinmuniza.com","linkedin":"https://www.linkedin.com/in/santiago-velasquez/","revenue_range":"200k_2m","industry":"semiconductors","city":"Brisbane","country":"AU","transcript":""},{"id":1776811162206,"name":"Lina Ortiz","company":"Conalca SAS","program":"Sin especificar","date":"2026-04-16T23:09:13.442277+00:00","urgency_level":"media","program_fit_score":6,"short_summary":"Lina Ortiz, CEO en Conalca SAS. logistics & supply chain. Bogotá, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Lina Ortiz/Del Rio figura como CEO de Conalca desde 2003, con seniority c-suite, por lo que tiene poder claro de decisión sobre presupuesto. La empresa muestra consistencia entre Apollo y LinkedIn Company: operador logístico/transporte con propuesta clara, trayectoria desde 1950, cerca de 200…"},"key_phrases":["CEO Conalca"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"26","email":"gerencia@conalca.co","linkedin":"http://www.linkedin.com/in/lina-maria-ortiz-del-rio-630413248","revenue_range":"5m_20m","industry":"logistics & supply chain","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162207,"name":"Heder Xiques","company":"LYD Latam / Cure Latam","program":"Sin especificar","date":"2026-04-16T23:07:59.721736+00:00","urgency_level":"alta","program_fit_score":6,"short_summary":"Heder Xiques, CEO & Director Científico en LYD Latam / Cure Latam. medical devices. Barranquilla, CO.","explicit_needs":{"problems":["Mentoría estratégica","Desarrollo de producto","Talento y equipo","Estructura legal y financiera","Levantamiento de inversión","Internacionalización | Toda mi experiencia se ha desarrollado en la importación y comercialización de dispositivos médicos y recientemente he ingresado a la industria de software. Mi interés es conocer más acerca de cómo conformar y liderar equipos","alcanzar nuevas relaciones en este segmento y abrir mi mente un poco más sobre las experiencias de otros."],"objectives":["Mentoría estratégica","Desarrollo de producto","Talento y equipo","Estructura legal y financiera","Levantamiento de inversión"]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":["Mentoría estratégica","Desarrollo de producto","Talento y equipo"],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Empresario consolidado en expansión","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X"],"summary":"[LLM] Se toma revenue_range=200k_2m por dato auto-reportado de USD 780,000, por lo que signal_revenue=1 y r1_revenue=2. Es CEO/Director Científico y seniority c_suite, así que signal_decision_power=2. No hay evidencia de MBA o programas premium pagados, por eso signal_premium_history=0. El sector en…"},"key_phrases":["CEO en Cure Latam | Dirección ejecutiva y Planeación estratégica","Toda mi experiencia se ha desarrollado en la importación y comercialización de dispositivos médicos y recientemente he ingresado a la industria de software. Mi interés es conocer más acerca de cómo conformar y liderar equipos, alcanzar nuevas relaciones en este segmento y abrir mi mente un poco más sobre las experiencias de otros."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"a","hvm_score":"24","email":"hxiques@lydlatam.com","linkedin":"https://www.linkedin.com/in/heder-j-xiques-m-5543a4a0/","revenue_range":"200k_2m","industry":"medical devices","city":"Barranquilla","country":"CO","transcript":""},{"id":1776811162208,"name":"Ada Lizeth Durán Cogollo","company":"Soulmedical/Grupo Soul","program":"Sin especificar","date":"2026-04-16T23:05:50.170806+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Ada Lizeth Durán Cogollo, Manufacturing Test Engineer en Soulmedical/Grupo Soul. information technology & services. Heroica Matamoros, MX.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] El perfil corresponde a una empleada técnica junior/entry-level en Aptiv, no a una founder, dueña o C-level. Aunque la empresa actual es muy grande y con ingresos >$20B USD (Apollo), el framework HVM evalúa a la persona como posible miembro de alto valor, por lo que signal_decision_power es 0…"},"key_phrases":["Manufacturing Test Engineer"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"21","email":"ada.duran@infectologia.com.co","linkedin":"https://www.linkedin.com/in/ada-duran/","revenue_range":"over_20m","industry":"information technology & services","city":"Heroica Matamoros","country":"MX","transcript":""},{"id":1776811162209,"name":"Mauricio Quiroga","company":"Fixit Assistance SAS","program":"Sin especificar","date":"2026-04-16T23:10:06.166210+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Mauricio Quiroga, Director en Fixit Assistance SAS. individual & family services. Colombia, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Mauricio aparece como CEO & Co-Founder de FIXIT GROUP y Board Member & Co-Founder de Asistex, por lo que tiene poder claro de decisión sobre presupuesto. FIXIT muestra 44-47 empleados en Apollo/LinkedIn, lo que sugiere un equipo relevante y operación real; sin embargo, no hay datos verificable…"},"key_phrases":["CEO - Entrepreneur "],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"21","email":"diego.rodriguez@fixitg.com","linkedin":"https://www.linkedin.com/in/mauricio-quiroga-fuquene-267905b7/","revenue_range":"200k_2m","industry":"individual & family services","city":"Colombia","country":"CO","transcript":""},{"id":1776811162210,"name":"Daniela Velazquez","company":"Fugitivos / Monte Manglar / Ciénaga / Naciente","program":"Sin especificar","date":"2026-04-16T23:07:02.853076+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Daniela Velazquez, Fundadora / Directora en Fugitivos / Monte Manglar / Ciénaga / Naciente. logistics & supply chain. Bogotá, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Hay inconsistencia fuerte entre los datos declarados del usuario (Daniela Velazquez, fundadora de varias marcas) y el enriquecimiento, que apunta a Daniel Zamora Acevedo en Conalca; se prioriza la evidencia más consistente entre Apollo y LinkedIn. El rol actual aparece como Subgerente/CTIO en…"},"key_phrases":["Líder en Innovación, Sostenibilidad e IA para Empresas Globales"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"21","email":"dvelasquezvelandia@gmail.com","linkedin":"https://www.linkedin.com/in/daniel-felipe-zamora-acevedo-9341bb117/","revenue_range":"200k_2m","industry":"logistics & supply chain","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162211,"name":"Jorge Gonzalez Mantilla","company":"MIT Drilling Solutions","program":"Sin especificar","date":"2026-04-16T23:08:17.316319+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Jorge Gonzalez Mantilla, Co-fundador en MIT Drilling Solutions. oil & energy. City Centre, MX.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Es cofundador de MIT Drilling Solutions y CDD Movimiento, por lo que tiene poder de decisión total sobre presupuesto. No hay datos directos de facturación; dado que ambas empresas son recientes (2022-2023) y pequeñas (5 y 15 empleados aprox.), se infiere conservadoramente un rango de 200K-2M U…"},"key_phrases":["Helping our clients to deliver their business, safe, reliable and cost effective."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"20","email":"jmantilla1980@gmail.com","linkedin":"https://mx.linkedin.com/in/jorge-gonzalez-mantilla-82197830","revenue_range":"200k_2m","industry":"oil & energy","city":"City Centre","country":"MX","transcript":""},{"id":1776811162212,"name":"Harold David Larrahondo","company":"Lafer","program":"Sin especificar","date":"2026-04-16T23:07:49.908386+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Harold David Larrahondo, General Manager en Lafer. insurance. Colombia, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Harold es Gerente General y Director General en dos entidades del grupo Lafer, lo que da poder claro de decisión sobre presupuesto (2). La empresa está bien definida como corredora/agencia de seguros con 36 empleados, 45+ años de trayectoria, presencia nacional en Colombia y clientes relevante…"},"key_phrases":["Gerente general en LAFER Soluciones Masivas de Seguros"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"20","email":"gerencia@lafer.com.co","linkedin":"http://www.linkedin.com/in/harold-david-larrahondo","revenue_range":"200k_2m","industry":"insurance","city":"Colombia","country":"CO","transcript":""},{"id":1776811162213,"name":"Mauro Rayo (Merquimia)","company":"Merquimia Group","program":"Sin especificar","date":"2026-04-16T23:10:12.770094+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Mauro Rayo (Merquimia), Director en Merquimia Group. . Colombia, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] LinkedIn indica claramente que Mauro Rayo es CEO de MERQUIMIA GROUP desde 1989, por lo que tiene poder de decisión total sobre presupuesto. La descripción de experiencia sugiere una empresa enfocada en innovación y desarrollo de productos para sectores farmacéutico, cosmético, veterinario, ali…"},"key_phrases":["CEO en MERQUIMIA GROUP"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"20","email":"maurorayo@merquimiacolombia.com","linkedin":"https://www.linkedin.com/in/mauro-enrique-rayo-moreno-47101728","revenue_range":"200k_2m","industry":"","city":"Colombia","country":"CO","transcript":""},{"id":1776811162214,"name":"Maria Fernanda Rozo Correa","company":"Universidad EAN","program":"Sin especificar","date":"2026-04-16T23:09:35.319244+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Maria Fernanda Rozo Correa, Directora en Universidad EAN. Educación. , .","explicit_needs":{"problems":["Validación de mercado","Crecimiento y ventas","Marketing y posicionamiento"],"objectives":["Validación de mercado","Crecimiento y ventas","Marketing y posicionamiento"]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":["Validación de mercado","Crecimiento y ventas","Marketing y posicionamiento"],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X"],"summary":"[LLM] Prospecto vinculado a Universidad EAN en rol directivo/gerencial ('Directora' y 'Gerente de Proyección y Crecimiento'), lo que sugiere poder de decisión parcial pero no necesariamente control total de presupuesto, por eso signal_decision_power=1. El sector educación es relevante, aunque no enc…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"19","email":"mfrozo@universidadean.edu.co","linkedin":"https://www.linkedin.com/in/maria-fernanda-rozo/","revenue_range":"unknown","industry":"Educación","city":"","country":"","transcript":""},{"id":1776811162215,"name":"Yudiel Fajardo Sixtos","company":"Super Leads","program":"Sin especificar","date":"2026-04-16T23:11:35.848256+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Yudiel Fajardo Sixtos, CEO | Founder en Super Leads. . Medellín, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Yudiel es CEO/Founder de SuperLeads, por lo que tiene poder de decisión total sobre presupuesto. La empresa tiene una propuesta clara: optimizar admisiones para instituciones educativas mediante sistema y automatizaciones premium, lo que encaja bien en servicios B2B/EdTech y da buen fit sector…"},"key_phrases":["Ayudo a instituciones educativas a transformar su proceso de admisión en una máquina de inscripciones con orden, tecnología y propósito."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"19","email":"yudiel@superleads.mx","linkedin":"https://www.linkedin.com/in/yudiel-fajardo-sixtos-a502851b/","revenue_range":"200k_2m","industry":"","city":"Medellín","country":"CO","transcript":""},{"id":1776811162216,"name":"Ricardo Giraldo","company":"EcoGroup Ingeniería","program":"Sin especificar","date":"2026-04-16T23:11:07.609991+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Ricardo Giraldo, Director / Gerente en EcoGroup Ingeniería. food & beverages. Santa Fe de Antioquia, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Se observa poder de decisión alto porque figura como CEO/Gerente General de Ecogroup en Apollo y LinkedIn. La empresa tiene 37 empleados, lo que soporta signal_team_potential=2 y sugiere una operación ya estructurada. No hay dato verificable de facturación; de forma conservadora se asigna reve…"},"key_phrases":["Apasionado por el emprendimiento, buscando siempre crear experiencia para las personas que confían en nosotros!! CEO EcoGroup Ingeniería  y Co Fundandor de Eco Hotel Casa María Parda."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"19","email":"triangiraldo@gmail.com","linkedin":"https://co.linkedin.com/in/ricardo-andres-giraldo-giraldo-94354a66","revenue_range":"200k_2m","industry":"food & beverages","city":"Santa Fe de Antioquia","country":"CO","transcript":""},{"id":1776811162217,"name":"Juan José Orrego Duque","company":"Stable eye","program":"Sin especificar","date":"2026-04-16T23:08:33.273379+00:00","urgency_level":"media","program_fit_score":5,"short_summary":"Juan José Orrego Duque, Firmware Developer en Stable eye. automotive. San Venanzio, IT.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Aunque la empresa actual es Ferrari y su revenue es claramente >$20M USD (Apollo reporta ~8.4B), el prospecto no es founder ni C-level sino Firmware Developer con seniority entry, por lo que no tiene poder de decisión presupuestal para 30X. El score de revenue se asigna por la compañía donde t…"},"key_phrases":["Power Electronics - Autosar"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"19","email":"orregoduque@gmail.com","linkedin":"https://www.linkedin.com/in/juan-jos%C3%A9-orrego-duque-54445089/","revenue_range":"over_20m","industry":"automotive","city":"San Venanzio","country":"IT","transcript":""},{"id":1776811162218,"name":"Juan Gomez","company":"AECSA","program":"Sin especificar","date":"2026-04-16T23:08:25.185235+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Juan Gomez, Director en AECSA. . Bogotá, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] La empresa AECSA sí es clara y relevante: BPO/cobranzas/recuperación de cartera en sector financiero, con 1,736 empleados, casi dos décadas de trayectoria y presencia consolidada, lo que soporta signal_sector_fit=2, signal_team_potential=2 y r0=4. No hay dato verificable de facturación, por re…"},"key_phrases":["Estudiante en susana wesley"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"18","email":"juanfg37@gmail.com","linkedin":"https://www.linkedin.com/in/juan-gomez-a68b83211/","revenue_range":"unknown","industry":"","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162219,"name":"Jessica Vesga","company":"THT - Predecimos el Comportamiento Humano","program":"Sin especificar","date":"2026-04-16T23:08:09.813563+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Jessica Vesga, Ejecutivo de cuentas comerciales en THT - Predecimos el Comportamiento Humano. human resources. Bogotá, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Jessica Vesga aparece como Commercial Account Executive/Ejecutivo de cuentas comerciales en THT, con seniority entry y función comercial, por lo que no hay evidencia de poder de decisión presupuestal y se asigna 0 en decision power. La empresa sí muestra señales sólidas: HR tech/servicios B2B…"},"key_phrases":["RRHH con propósito: Herramientas para potenciar talento humano con impactó l Ejecutiva Negocios Empresariales 13 años |Método de los colores | Herramientas para la gestión del talento humano | DISC |"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"18","email":"dewaca3837@sixoplus.com","linkedin":"https://www.linkedin.com/in/jessica-vesga-39235a12a/","revenue_range":"200k_2m","industry":"human resources","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162220,"name":"Nairon Barrios","company":"Corfiamerica","program":"Sin especificar","date":"2026-04-16T23:10:30.666127+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Nairon Barrios, Presidente en Corfiamerica. construction. Bogotá, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Prospecto con rol claro de Presidente/decision maker en Corfiamerica, empresa fundada en 1993 y con 14 empleados, lo que sugiere control presupuestal directo y un equipo pequeño-medio. La compañía opera en construcción/servicios inmobiliarios; es un sector relevante pero más tradicional y con…"},"key_phrases":["Presidente en Corporación Finanzas de America CORFIAMERICA S.A."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"17","email":"nairon.b1973@gmail.co","linkedin":"http://www.linkedin.com/in/nairon-barrios-589777a8","revenue_range":"200k_2m","industry":"construction","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162221,"name":"Martin Gomez","company":"Inversiones Leal y Oxigenos SAS","program":"Sin especificar","date":"2026-04-16T23:09:58.681872+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Martin Gomez, Gerente en Inversiones Leal y Oxigenos SAS. . Bogotá D.C. Metropolitan Area, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Prospecto con perfil ejecutivo sólido en Bogotá, con experiencia en dirección, consultoría, educación y sector público. Su rol actual como 'Gerente general adjunto' sugiere poder de decisión parcial, no total. La empresa principal no tiene datos verificables de tamaño o facturación; por conser…"},"key_phrases":["CEO gestión empresarial, gerencia de proyectos, consultor en banca de inversión y valoración y venta de empresas"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"17","email":"martin.gomez2013@gmail.com","linkedin":"https://www.linkedin.com/in/martin-eduardo-g%C3%B3mez-aguilera-b47a68b4/","revenue_range":"200k_2m","industry":"","city":"Bogotá D.C. Metropolitan Area","country":"CO","transcript":""},{"id":1776811162222,"name":"Juan Salas","company":"Branding media","program":"Sin especificar","date":"2026-04-16T23:08:40.406225+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Juan Salas, Director / Fundador en Branding media. marketing & advertising. Bogotá, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Juan Salas es Founder/CEO de Branding Media desde 2010, por lo que tiene poder claro de decisión sobre presupuesto (2). La empresa opera en advertising services con propuesta entendible y diferenciación moderada en publicidad dentro de universidades en Colombia, pero sigue siendo un negocio má…"},"key_phrases":["CEO Principal en Branding Media | Liderazgo estratégico, Toma de decisiones"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"17","email":"juan.salasg26@gmail.com","linkedin":"https://linkedin.com/in/juan-salas-7b8045142","revenue_range":"200k_2m","industry":"marketing & advertising","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162223,"name":"Nicolás Moreno","company":"UNT Health Science Center","program":"Sin especificar","date":"2026-04-16T23:10:39.220270+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Nicolás Moreno, Lead Contract Analyst en UNT Health Science Center. Logística. Minneapolis, US.","explicit_needs":{"problems":["Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo","Alianzas estratégicas","Levantamiento de inversión","Internacionalización | Somos una empresa de logística (Freight Forwarder) en Centroamérica que busca seguir posicionando y creciendo internacionalmente"],"objectives":["Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo","Alianzas estratégicas","Levantamiento de inversión"]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":["Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo"],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X"],"summary":"[LLM] Hay una discrepancia fuerte entre el enriquecimiento de Apollo/LinkedIn, que muestra a Nicolás Moreno como Lead Contract Analyst en UNT Health Science Center, y el Typeform, donde se auto-reporta como CEO de TSI Logistics Group. Dado el framework, se puntúa de forma conservadora: se toma como…"},"key_phrases":["Lead Contract Analyst | UNT Health Fort Worth","Somos una empresa de logística (Freight Forwarder) en Centroamérica que busca seguir posicionando y creciendo internacionalmente"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"17","email":"nmoreno@gruporemor.com.sv","linkedin":"https://www.linkedin.com/in/nicolas-moreno/","revenue_range":"unknown","industry":"Logística","city":"Minneapolis","country":"US","transcript":""},{"id":1776811162224,"name":"Claudia Juliana Rangel Romero","company":"Oliver Velez","program":"Sin especificar","date":"2026-04-16T23:06:38.561544+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Claudia Juliana Rangel Romero, CEO en Oliver Velez. . Colombia, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Se observa poder de decisión alto porque figura como CEO actual y seniority c_suite, por lo que signal_decision_power=2. No hay datos verificables de facturación, empleados ni tamaño de empresa; por regla, revenue_range queda unknown, signal_revenue=0 y r1_revenue=2 por default. El headline y…"},"key_phrases":["Mentora de Finanzas y Abundancia para Mujeres"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"16","email":"julyrangel2@gmail.com","linkedin":"https://www.linkedin.com/in/claudia-juliana-rangel-romero-74a12b81/","revenue_range":"unknown","industry":"","city":"Colombia","country":"CO","transcript":""},{"id":1776811162225,"name":"Carlos Mario Ospina","company":"Casa Colombosuiza SAS","program":"Sin especificar","date":"2026-04-16T23:06:29.196176+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Carlos Mario Ospina, Gerente / Fundador en Casa Colombosuiza SAS. Retail. , .","explicit_needs":{"problems":["Mentoría estratégica","Desarrollo de producto","Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo","Alianzas estratégicas","Internacionalización"],"objectives":["Mentoría estratégica","Desarrollo de producto","Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo"]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":["Mentoría estratégica","Desarrollo de producto","Crecimiento y ventas"],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X"],"summary":"[LLM] Se califica con base en datos limitados y de forma conservadora. El prospecto aparece como Fundador/Gerente en datos básicos y Director Comercial en Typeform, lo que sugiere poder de decisión alto sobre presupuesto (2). La empresa declarada es Casa Colombosuiza SAS en retail; el negocio se ent…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"16","email":"cmo@carlosmarioospina.com","linkedin":"https://www.linkedin.com/in/carlos-mario-ospina/","revenue_range":"200k_2m","industry":"Retail","city":"","country":"","transcript":""},{"id":1776811162226,"name":"Sebastian Ossa","company":"BIPP Media","program":"Sin especificar","date":"2026-04-16T23:11:28.880933+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Sebastian Ossa, Director Comercial en BIPP Media. apparel & fashion. Medellín, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Aunque en datos básicos declara ser Director Comercial de BIPP Media, tanto Apollo como LinkedIn perfil muestran consistentemente que su rol actual es Video Editor en Mugsy, con seniority entry, por lo que se prioriza esa evidencia y se asigna signal_decision_power=0. Mugsy sí muestra revenue…"},"key_phrases":["Video Editor"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"16","email":"comercialbippcol@gmail.com","linkedin":"https://www.linkedin.com/in/sebastian-ossa-a5264616a/","revenue_range":"5m_20m","industry":"apparel & fashion","city":"Medellín","country":"CO","transcript":""},{"id":1776811162227,"name":"Alexander Sánchez Cardona","company":"Sánchez Cardona","program":"Sin especificar","date":"2026-04-16T23:06:00.335170+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Alexander Sánchez Cardona, N/D en Sánchez Cardona. Publicidad y marketing. Cali, CO.","explicit_needs":{"problems":["Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo | Estamos estructurando he implementando un nuevo concepto y sistema de ejecución general","nuestra necesidad podría ser mas de equipo para automatizar los nuevos procesos."],"objectives":["Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo"]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":["Crecimiento y ventas","Marketing y posicionamiento","Talento y equipo"],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X"],"summary":"[LLM] Se toma como base conservadora el Typeform: reporta ser CEO de Los Creators, sector publicidad y marketing, ingresos anuales de USD 300,000 y equipo de 8 personas, por lo que revenue_range=200k_2m, signal_revenue=1, r1_revenue=2 y signal_team_potential=1. El poder de decisión se deja en 1 y no…"},"key_phrases":["Operador de despachos en Carvajal pulpa y papel","Estamos estructurando he implementando un nuevo concepto y sistema de ejecución general, nuestra necesidad podría ser mas de equipo para automatizar los nuevos procesos."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"15","email":"alex36grados@gmail.com","linkedin":"https://www.linkedin.com/in/alexander-s%C3%A1nchez-cardona-737262286/","revenue_range":"200k_2m","industry":"Publicidad y marketing","city":"Cali","country":"CO","transcript":""},{"id":1776811162228,"name":"Nicolás Varela","company":"Farmacenter Suba Salud","program":"Sin especificar","date":"2026-04-16T23:10:47.649554+00:00","urgency_level":"media","program_fit_score":4,"short_summary":"Nicolás Varela, Promotor de ventas en Farmacenter Suba Salud. Alimentos y bebidas. Bogotá, CO.","explicit_needs":{"problems":["Levantamiento de inversión | Actualmente contamos con infraestructura para la producción de leche en polvo (spray drying)","lo que nos permite procesar materia prima a escala. El siguiente paso estratégico es evolucionar hacia productos de mayor valor agregado mediante la fortificación con vitaminas","minerales y otros componentes funcionales."],"objectives":["Levantamiento de inversión"]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":[],"gaps":[]},"value_opportunities":{"type_of_help":["Levantamiento de inversión"],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor en crecimiento","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X"],"summary":"[LLM] Hay inconsistencia entre el perfil laboral visible (promotor de ventas en Farmacenter Suba Salud) y lo auto-reportado (representante legal de Grupo Camper). Se toma una postura conservadora: no hay evidencia verificable de facturación, por lo que revenue_range queda unknown y R1=2 por regla de…"},"key_phrases":["--","Actualmente contamos con infraestructura para la producción de leche en polvo (spray drying), lo que nos permite procesar materia prima a escala. El siguiente paso estratégico es evolucionar hacia productos de mayor valor agregado mediante la fortificación con vitaminas, minerales y otros componentes funcionales."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"b","hvm_score":"15","email":"nicolasvarela2@gmail.com","linkedin":"https://www.linkedin.com/in/nicol%C3%A1s-varela-3114111b1/","revenue_range":"unknown","industry":"Alimentos y bebidas","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162229,"name":"Maria Gomez","company":"Anthesis Group","program":"Sin especificar","date":"2026-04-16T23:09:43.482843+00:00","urgency_level":"baja","program_fit_score":4,"short_summary":"Maria Gomez, Directora Colombia en Anthesis Group. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] La información es muy limitada. Se infiere poder de decisión parcial porque el cargo declarado es 'Directora Colombia', lo que sugiere liderazgo país pero no necesariamente control total de presupuesto corporativo. Anthesis Group suena a firma estructurada y no a freelancer, por lo que la comp…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"14","email":"maria.gomez@anthesisgroup.com","linkedin":"https://www.linkedin.com/in/maria-gomez-anthesis/","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162230,"name":"René Mauricio Rojas Ávila","company":"Think-e Inglés Colombia","program":"Sin especificar","date":"2026-04-16T23:10:58.805137+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"René Mauricio Rojas Ávila, Director / Fundador en Think-e Inglés Colombia. . , CL.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Hay inconsistencia entre la empresa/cargo declarados (Director/Fundador en Think-e Inglés Colombia) y el perfil de LinkedIn enriquecido, que muestra roles actuales como Vicepresidente de marketing en B2B Organization y Director Internacional en Business Management. Sin datos verificables de fa…"},"key_phrases":["| Vicepresidente de marketing, america latina, Estados Unidos y España | Especializado en la formacion de equipos de mercadeo y comerciales |"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"13","email":"renerojas@t-ingles.com","linkedin":"https://www.linkedin.com/in/rene-rojas-avila","revenue_range":"unknown","industry":"","city":"","country":"CL","transcript":""},{"id":1776811162232,"name":"Fabian Rojas","company":"QNA Medical","program":"Sin especificar","date":"2026-04-16T23:07:34.879587+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"Fabian Rojas, CEO en QNA Medical. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Se asigna signal_decision_power=2 porque el cargo declarado es CEO, lo que sugiere control directo o alto sobre presupuesto. Se asigna signal_sector_fit=2 por el nombre de la empresa 'QNA Medical', que indica probable operación en salud/medtech, un sector afín a la red 30X. No hay datos verifi…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"13","email":"ceo@qnamedical.com","linkedin":"","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162233,"name":"Erick Arturo Díaz","company":"Capptour // Constructora Open House // Open House Capital","program":"Sin especificar","date":"2026-04-16T23:07:18.485577+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"Erick Arturo Díaz, Fundador en Capptour // Constructora Open House // Open House Capital. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Se asigna signal_decision_power=2 porque el cargo declarado es Fundador, lo que sugiere poder de decisión. No hay datos verificables de facturación, por lo que revenue_range queda en unknown, signal_revenue=0 y r1_revenue=2 por regla default sin dato. El sector es ambiguo: Capptour sugiere pos…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"11","email":"ea890819@gmail.com","linkedin":"","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162234,"name":"Luis Enrique Diaz Oviedo","company":"Importaciones Gaby","program":"Sin especificar","date":"2026-04-16T23:09:25.666344+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"Luis Enrique Diaz Oviedo, Director / Gerente en Importaciones Gaby. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Prospecto declarado como Director/Gerente de 'Importaciones Gaby', lo que sugiere poder de decisión parcial pero no evidencia suficiente para asumir control total de presupuesto, por eso signal_decision_power=1. El nombre de la empresa indica un negocio de importaciones/comercio, entendible pe…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"11","email":"luisd4867@gmail.com","linkedin":"","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162235,"name":"Lina Hernandez","company":"Lina Hernandez Escuela","program":"Sin especificar","date":"2026-04-16T23:09:04.675041+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"Lina Hernandez, Fundadora / Directora en Lina Hernandez Escuela. e-learning. Cali, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Es fundadora/directora de su propia escuela, por lo que tiene poder de decisión total sobre presupuesto. La empresa opera en e-learning y formación organizacional, sector parcialmente afín a 30X, pero con escala limitada: solo 2 empleados, 23 seguidores en LinkedIn y propuesta más orientada a…"},"key_phrases":["💪Empodero Mujeres y su Liderazgo, he  ayudado a más de 1.500 personas a transformarse y seguimos creciendo juntas💙"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"11","email":"infolinahernandez@gmail.com","linkedin":"https://www.linkedin.com/in/linahernandezmentora/","revenue_range":"under_200k","industry":"e-learning","city":"Cali","country":"CO","transcript":""},{"id":1776811162236,"name":"Liliana Ladino","company":"Cienutrition","program":"Sin especificar","date":"2026-04-16T23:08:56.994811+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"Liliana Ladino, Directora / Fundadora en Cienutrition. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] La única señal sólida es el cargo declarado de Directora/Fundadora, lo que sugiere poder de decisión total sobre presupuesto (2). El nombre de la empresa, Cienutrition, sugiere un negocio relacionado con nutrición/salud, por lo que asigno fit sectorial parcial (1), pero no hay descripción, ind…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"11","email":"lladino@cienutrition.org","linkedin":"https://www.linkedin.com/in/liliana-ladino/","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162237,"name":"Leo Ramos","company":"ServirPRO Seguros","program":"Sin especificar","date":"2026-04-16T23:08:47.983688+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"Leo Ramos, Director / Socio en ServirPRO Seguros. insurance. Envigado, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Prospecto con rol de Gerente General/Director-Socio en ServirPRO, lo que sugiere poder parcial de decisión, pero no hay evidencia clara de que decida solo el presupuesto. La empresa opera en seguros/asesoría de seguridad social, sector relevante pero más local y de baja escala visible; por eso…"},"key_phrases":["Empresario, trader inversionista, amante de los viajes."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"11","email":"leo.1422ramos@gmail.com","linkedin":"https://www.linkedin.com/in/leo-ramos-t-681323265/","revenue_range":"200k_2m","industry":"insurance","city":"Envigado","country":"CO","transcript":""},{"id":1776811162238,"name":"Fredy Dario Ortiz","company":"GoCare","program":"Sin especificar","date":"2026-04-16T23:07:41.219129+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"Fredy Dario Ortiz, Director / CEO en GoCare. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Solo hay evidencia clara de que Fredy Dario Ortiz ocupa un rol de Director/CEO en GoCare, lo que sugiere poder de decisión total sobre presupuesto (signal_decision_power=2). El nombre de la empresa 'GoCare' sugiere posible relación con salud/servicios, pero sin descripción, industria confirmad…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"11","email":"drfredyortiz@gmail.com","linkedin":"","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162239,"name":"Angy Giraldo Montoya","company":"ServirPRO Seguros","program":"Sin especificar","date":"2026-04-16T23:06:21.552221+00:00","urgency_level":"baja","program_fit_score":3,"short_summary":"Angy Giraldo Montoya, Directora / Socia en ServirPRO Seguros. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] Prospecto con información muy limitada. Se toma 'Directora / Socia' como señal de poder de decisión parcial, pero no suficiente para asumir control total de presupuesto sin evidencia adicional. La empresa 'ServirPRO Seguros' sugiere un negocio de seguros/servicios financieros, sector relevante…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"11","email":"angiraldodesigner@gmail.com","linkedin":"","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162240,"name":"Daniel Zamora","company":"Conalca SAS","program":"Sin especificar","date":"2026-04-16T23:06:54.820870+00:00","urgency_level":"baja","program_fit_score":2,"short_summary":"Daniel Zamora, Director Operativo en Conalca SAS. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] La información disponible es muy limitada. Se identifica a Daniel Zamora como Director Operativo en Conalca SAS, lo que sugiere poder parcial de decisión presupuestaria, pero no control total como CEO/founder, por eso signal_decision_power=1. No hay datos verificables de facturación, industria…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"10","email":"daniel.zamora@conalca.com.co","linkedin":"http://www.linkedin.com/in/daniel-zamora-conalca/","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162241,"name":"Miller Martinez","company":"Millers Group","program":"Sin especificar","date":"2026-04-16T23:10:22.208381+00:00","urgency_level":"baja","program_fit_score":2,"short_summary":"Miller Martinez, Asesor jurídico en Millers Group. legal services. Bogotá, CO.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] El prospecto aparece como asesor jurídico y también como CEO/Principal de AbogadosMillersGroup, pero la empresa figura como sole proprietorship de 1 empleado y solo 10 seguidores, lo que sugiere práctica legal muy pequeña sin escala visible; por eso revenue_range se estima conservadoramente en…"},"key_phrases":["Asesor jurídico | Gestión administrativa y contractual"],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"10","email":"ceo@millersgroup.com.co","linkedin":"https://www.linkedin.com/in/miller-martinez-59ba51b6/","revenue_range":"under_200k","industry":"legal services","city":"Bogotá","country":"CO","transcript":""},{"id":1776811162242,"name":"Luis Alfonso Ruiz","company":"IGLOO GLOBAL SAS","program":"Sin especificar","date":"2026-04-16T23:09:19.727323+00:00","urgency_level":"baja","program_fit_score":2,"short_summary":"Luis Alfonso Ruiz, Director en IGLOO GLOBAL SAS. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] La información disponible es muy limitada. Solo se observa que Luis Alfonso Ruiz está vinculado actualmente a IGLOO GLOBAL SAS y su cargo declarado es Director. Por ello, se asigna signal_decision_power=1, ya que 'Director' sugiere influencia parcial pero no necesariamente control total de pre…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"9","email":"lruiz@igloolab.co","linkedin":"https://www.linkedin.com/in/luis-ruiz-igloo/","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162243,"name":"Sasha Alexandra Koshkina Fernandez","company":"1to1 IA","program":"Sin especificar","date":"2026-04-16T23:11:20.924938+00:00","urgency_level":"baja","program_fit_score":2,"short_summary":"Sasha Alexandra Koshkina Fernandez, N/D en 1to1 IA. . , .","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] La información disponible es muy limitada. Solo se observa vinculación actual con '1to1 IA', lo que sugiere un posible fit sectorial moderado por asociación con IA/tecnología, pero sin descripción del negocio, cargo, seniority, tamaño de empresa, revenue ni evidencia de poder de decisión. Sigu…"},"key_phrases":[],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"9","email":"koshkalexasha@gmail.com","linkedin":"","revenue_range":"unknown","industry":"","city":"","country":"","transcript":""},{"id":1776811162244,"name":"Martha Patricia Gomez","company":"Subastas y comercio SAS","program":"Sin especificar","date":"2026-04-16T23:09:50.767096+00:00","urgency_level":"baja","program_fit_score":2,"short_summary":"Martha Patricia Gomez, Personal Assistant en Subastas y comercio SAS. . Chicago, US.","explicit_needs":{"problems":[],"objectives":[]},"implicit_needs":{"unspoken_frustrations":[],"fears_insecurities":[],"lack_of_clarity":["Señal de dolor no explícita: señal=0"],"gaps":[]},"value_opportunities":{"type_of_help":[],"high_impact_solutions":[],"priorities":[]},"profile":{"maturity_level":"Emprendedor emergente","mentality_type":"Por definir — pendiente conversación","main_limiters":["Sin historial de programas premium","Sin participación previa con 30X","Dolor de negocio no explícito"],"summary":"[LLM] El perfil corresponde a una persona en rol operativo/junior ('Personal Assistant', seniority entry) y no a una founder, CEO o dueña con poder de decisión presupuestaria. No hay datos verificables de facturación, tamaño de empresa, industria clara ni equipo a cargo; por regla, revenue desconoci…"},"key_phrases":["Highly organized and detail oriented graduate in Business Administration with 7+ years of experience in customer service and business relationships."],"program_recommendation":"Por definir — pendiente enriquecimiento con transcript","hvm_tier":"c","hvm_score":"6","email":"gerencia@subastasycomercio.com.co","linkedin":"https://www.linkedin.com/in/martha-gomez/","revenue_range":"unknown","industry":"","city":"Chicago","country":"US","transcript":""}];
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let people = JSON.parse(localStorage.getItem('30x_people') || '[]');
+if (!people.length) {
+  people = HVM_SEED_DATA;
+  localStorage.setItem('30x_people', JSON.stringify(people));
+}
+let apiKey = localStorage.getItem('30x_apikey') || '';
+let programs = JSON.parse(localStorage.getItem('30x_programs') || 'null') || [
+  'Inmersión Ejecutiva Presencial',
+  'Sales Machine',
+  'Negociación Ejecutivo',
+  'AI for Executives',
+  'AI Sales',
+  'Hardcore AI',
+  'AI for Boards',
+  'GTM Strategy',
+  'Growth Rockstar',
+  'Product Rockstar',
+  'Xtreme Growth',
+  'Advanced Strategy',
+  'Achievers',
+  'Achievers Presencial',
+  'Next'
+];
+
+let currentFilter     = 'all';
+let currentTierFilter = 'all';
+let currentView       = 'cards';
+let searchQuery       = '';
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  refreshApiStatus();
+  populateProgramSelect();
+  renderDashboard();
+  loadSettingsView();
+
+  const dz = document.getElementById('dropZone');
+  dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', ()  => dz.classList.remove('dragover'));
+  dz.addEventListener('drop',      e  => {
+    e.preventDefault();
+    dz.classList.remove('dragover');
+    if (e.dataTransfer.files[0]) handleFile({ target: { files: e.dataTransfer.files } });
+  });
+});
+
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
+function nav(page) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + page).classList.add('active');
+  const idxMap = { upload: 0, dashboard: 1, settings: 2 };
+  document.querySelectorAll('.nav-btn')[idxMap[page]].classList.add('active');
+  if (page === 'dashboard') renderDashboard();
+  if (page === 'settings')  loadSettingsView();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('vt-cards').classList.toggle('active', v === 'cards');
+  document.getElementById('vt-table').classList.toggle('active', v === 'table');
+  document.getElementById('cardsView').style.display = v === 'cards' ? 'block' : 'none';
+  document.getElementById('tableView').style.display = v === 'table' ? 'block' : 'none';
+}
+
+// ══════════════════════════════════════════
+// API KEY
+// ══════════════════════════════════════════
+function saveApiKey() {
+  const v = document.getElementById('apiKeyInput').value.trim();
+  if (!v.startsWith('sk-')) { toast('Ingresa una API Key válida (sk-ant-...)', 'error'); return; }
+  apiKey = v;
+  localStorage.setItem('30x_apikey', apiKey);
+  refreshApiStatus();
+  toast('API Key guardada ✓', 'success');
+}
+
+function saveKeySettings() {
+  const v = document.getElementById('settingsKey').value.trim();
+  if (!v.startsWith('sk-')) { toast('Ingresa una API Key válida', 'error'); return; }
+  apiKey = v;
+  localStorage.setItem('30x_apikey', apiKey);
+  document.getElementById('apiKeyInput').value = v;
+  refreshApiStatus();
+  toast('API Key guardada ✓', 'success');
+}
+
+function refreshApiStatus() {
+  const dot = document.getElementById('apiDot');
+  dot.classList.toggle('ok', !!apiKey);
+  if (apiKey) document.getElementById('apiKeyInput').value = apiKey;
+}
+
+// ══════════════════════════════════════════
+// PROGRAMS
+// ══════════════════════════════════════════
+function populateProgramSelect() {
+  const stored = JSON.parse(localStorage.getItem('30x_programs') || 'null');
+  if (stored) programs = stored;
+  const sel = document.getElementById('programSelect');
+  sel.innerHTML = '<option value="">Sin especificar</option>';
+  programs.forEach(name => {
+    const o = document.createElement('option');
+    o.value = o.textContent = name;
+    sel.appendChild(o);
+  });
+}
+
+function savePrograms() {
+  const raw = document.getElementById('programsText').value;
+  programs = raw.split('\n').map(s => s.trim()).filter(Boolean);
+  localStorage.setItem('30x_programs', JSON.stringify(programs));
+  populateProgramSelect();
+  toast('Programas guardados ✓', 'success');
+}
+
+// ══════════════════════════════════════════
+// FILE
+// ══════════════════════════════════════════
+function handleFile(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('transcriptText').value = e.target.result;
+    toast(`"${file.name}" cargado ✓`, 'success');
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+// ══════════════════════════════════════════
+// ANALYZE
+// ══════════════════════════════════════════
+async function analyzeTranscript() {
+  const name       = document.getElementById('personName').value.trim();
+  const company    = document.getElementById('personCompany').value.trim();
+  const program    = document.getElementById('programSelect').value;
+  const transcript = document.getElementById('transcriptText').value.trim();
+
+  if (!transcript) { toast('Ingresa un transcript para analizar', 'error'); return; }
+  if (!apiKey)     { toast('Configura tu API Key primero', 'error'); return; }
+
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+
+  const msgs = [
+    'Leyendo el transcript...',
+    'Identificando necesidades explícitas...',
+    'Detectando necesidades implícitas...',
+    'Analizando perfil y mentalidad...',
+    'Generando recomendaciones...'
+  ];
+  let mi = 0;
+  showLoading(msgs[0]);
+  const iv = setInterval(() => { mi = (mi + 1) % msgs.length; setLoadingMsg(msgs[mi]); }, 2200);
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-opus-4-7',
+        max_tokens: 4096,
+        messages: [{ role: 'user', content: buildPrompt(name, company, program, transcript) }]
+      })
+    });
+
+    clearInterval(iv);
+
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e?.error?.message || `HTTP ${res.status}`);
+    }
+
+    const data    = await res.json();
+    const rawText = data.content[0].text;
+    const match   = rawText.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('No se pudo parsear la respuesta de la IA.');
+
+    const analysis    = JSON.parse(match[0]);
+    analysis.id       = Date.now();
+    analysis.name     = name    || 'Sin nombre';
+    analysis.company  = company || '';
+    analysis.program  = program || 'Sin especificar';
+    analysis.date     = new Date().toISOString();
+    analysis.transcript = transcript.slice(0, 500) + (transcript.length > 500 ? '…' : '');
+
+    people.push(analysis);
+    localStorage.setItem('30x_people', JSON.stringify(people));
+
+    hideLoading();
+    renderInlineResult(analysis);
+    toast('Análisis completado ✓', 'success');
+
+  } catch (err) {
+    clearInterval(iv);
+    hideLoading();
+    toast('Error: ' + err.message, 'error');
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ══════════════════════════════════════════
+// PROMPT
+// ══════════════════════════════════════════
+function buildPrompt(name, company, program, transcript) {
+  return `Eres un experto en ventas consultivas de alto valor, psicología del consumidor y programas de desarrollo empresarial. Trabajas para 30X, empresa de aceleración para emprendedores y empresarios latinoamericanos.
+
+Analiza el siguiente transcript y genera un análisis profundo, perspicaz y accionable.
+
+DATOS:
+- Nombre: ${name || 'No especificado'}
+- Empresa: ${company || 'No especificada'}
+- Programa de interés: ${program || 'No especificado'}
+
+TRANSCRIPT:
+"""
+${transcript}
+"""
+
+Responde ÚNICAMENTE con un JSON válido puro. Sin texto antes ni después. Sin markdown ni backticks.
+
+{
+  "explicit_needs": {
+    "problems": ["problema mencionado directamente 1", "problema 2"],
+    "objectives": ["objetivo que quiere lograr 1", "objetivo 2"]
+  },
+  "implicit_needs": {
+    "unspoken_frustrations": ["frustración detectada pero no dicha 1"],
+    "fears_insecurities": ["miedo o bloqueo identificado 1", "inseguridad 2"],
+    "lack_of_clarity": ["área donde no tiene claridad 1"],
+    "gaps": ["brecha entre lo que dice y lo que realmente necesita 1"]
+  },
+  "value_opportunities": {
+    "type_of_help": ["tipo de ayuda que realmente necesita"],
+    "high_impact_solutions": ["solución de alto impacto 1", "solución 2"],
+    "priorities": ["primera prioridad (más urgente)", "segunda", "tercera"]
+  },
+  "profile": {
+    "maturity_level": "nivel de madurez (ej: Empresario en expansión, Emprendedor emergente, CEO consolidado)",
+    "mentality_type": "mentalidad detectada (ej: Reactiva, Operativa, Estratégica, Expansiva)",
+    "main_limiters": ["limitante 1", "limitante 2", "limitante 3"],
+    "summary": "2-3 oraciones describiendo el perfil completo: etapa, motivaciones y bloqueos."
+  },
+  "key_phrases": [
+    "frase textual del transcript que revela necesidad profunda 1",
+    "frase textual 2",
+    "frase textual 3",
+    "frase textual 4"
+  ],
+  "program_recommendation": "programa más recomendado y en 1 oración por qué.",
+  "program_fit_score": 8,
+  "urgency_level": "alta",
+  "short_summary": "1 oración: quién es esta persona y qué necesita fundamentalmente."
+}
+
+REGLAS:
+- program_fit_score: número del 1 al 10
+- urgency_level: exactamente "alta", "media" o "baja"
+- key_phrases: frases TEXTUALES del transcript
+- Las necesidades implícitas son las más valiosas — sé profundo y específico`;
+}
+
+// ══════════════════════════════════════════
+// RENDER INLINE RESULT
+// ══════════════════════════════════════════
+function renderInlineResult(a) {
+  const el = document.getElementById('analysisResult');
+  el.innerHTML = buildAnalysisHTML(a);
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  animateScore(el.querySelector('.score-fill'), a.program_fit_score);
+}
+
+// ══════════════════════════════════════════
+// BUILD ANALYSIS HTML
+// ══════════════════════════════════════════
+function buildAnalysisHTML(a) {
+  const urgMap   = { alta: 'bg-red',    media: 'bg-orange', baja: 'bg-green' };
+  const urgLabel = { alta: 'Urgencia Alta', media: 'Urgencia Media', baja: 'Urgencia Baja' };
+
+  const li    = items => (items || []).map(i => `<li>${esc(i)}</li>`).join('');
+  const acard = (color, label, body, full) => `
+    <div class="a-card${full?' full':''}">
+      <div class="a-title">
+        <span class="a-bar" style="background:${color}"></span>
+        <span style="color:${color}">${label}</span>
+      </div>
+      ${body}
+    </div>`;
+
+  const en = a.explicit_needs        || {};
+  const im = a.implicit_needs        || {};
+  const vo = a.value_opportunities   || {};
+  const pr = a.profile               || {};
+
+  return `
+  <div class="result-wrap" style="margin-top:32px">
+    <div class="result-hero">
+      <div>
+        <div class="result-name">${esc(a.name)}</div>
+        <div class="badge-row">
+          ${a.company ? `<span class="badge bg-gray">${esc(a.company)}</span>` : ''}
+          <span class="badge bg-yellow">${esc(a.program)}</span>
+          <span class="badge ${urgMap[a.urgency_level]||'bg-orange'}">${urgLabel[a.urgency_level]||'Media'}</span>
+        </div>
+      </div>
+      <div class="fit-block">
+        <div class="fit-label">Fit Score</div>
+        <div class="fit-val">${a.program_fit_score}<span class="fit-denom">/10</span></div>
+      </div>
+    </div>
+
+    ${a.short_summary ? `<div class="summary-box">✦ &nbsp;${esc(a.short_summary)}</div>` : ''}
+
+    <div class="analysis-body">
+      <div class="a-grid">
+
+        ${acard('#E9FF7B', 'Necesidades Explícitas', `
+          ${(en.problems||[]).length ? `<div class="sub-l">Problemas</div><ul class="blist">${li(en.problems)}</ul>` : ''}
+          ${(en.objectives||[]).length ? `<div class="sub-l">Objetivos</div><ul class="blist">${li(en.objectives)}</ul>` : ''}
+        `)}
+
+        ${acard('#FF5C5C', 'Necesidades Implícitas', `
+          ${(im.fears_insecurities||[]).length ? `<div class="sub-l">Miedos / Bloqueos</div><ul class="blist">${li(im.fears_insecurities)}</ul>` : ''}
+          ${(im.unspoken_frustrations||[]).length ? `<div class="sub-l">Frustraciones</div><ul class="blist">${li(im.unspoken_frustrations)}</ul>` : ''}
+          ${(im.gaps||[]).length ? `<div class="sub-l">Brechas</div><ul class="blist">${li(im.gaps)}</ul>` : ''}
+        `)}
+
+        ${acard('#7BB8FF', 'Oportunidades de Valor', `
+          ${(vo.priorities||[]).length ? `<div class="sub-l">Prioridades</div><ul class="blist">${(vo.priorities||[]).map((p,i)=>`<li><strong>${i+1}.</strong> ${esc(p)}</li>`).join('')}</ul>` : ''}
+          ${(vo.high_impact_solutions||[]).length ? `<div class="sub-l">Soluciones de alto impacto</div><ul class="blist">${li(vo.high_impact_solutions)}</ul>` : ''}
+        `)}
+
+        ${acard('#C07BFF', 'Perfil de la Persona', `
+          <div class="profile-2">
+            <div class="pitem"><div class="pl">Madurez</div><div class="pv">${esc(pr.maturity_level||'—')}</div></div>
+            <div class="pitem"><div class="pl">Mentalidad</div><div class="pv">${esc(pr.mentality_type||'—')}</div></div>
+          </div>
+          ${(pr.main_limiters||[]).length ? `<div class="sub-l">Limitantes</div><div class="tags">${(pr.main_limiters||[]).map(l=>`<span class="tag">${esc(l)}</span>`).join('')}</div>` : ''}
+          ${pr.summary ? `<p style="font-size:12px;color:var(--t3);margin-top:12px;line-height:1.65">${esc(pr.summary)}</p>` : ''}
+        `)}
+
+        ${acard('#7BFF9E', 'Frases Clave del Transcript', `
+          <div class="quote-list">
+            ${(a.key_phrases||[]).map(q=>`<div class="quote">"${esc(q)}"</div>`).join('')}
+          </div>
+        `, true)}
+
+        ${a.program_recommendation ? `
+        <div class="rec-card full">
+          <div class="a-title">
+            <span class="a-bar" style="background:var(--yellow)"></span>
+            <span style="color:var(--yellow)">Recomendación de Programa</span>
+          </div>
+          <p style="font-size:14px;color:var(--t2);line-height:1.65">${esc(a.program_recommendation)}</p>
+          <div class="score-row">
+            <span class="score-lbl">Fit con el programa</span>
+            <div class="score-track"><div class="score-fill"></div></div>
+            <span class="score-num">${a.program_fit_score}/10</span>
+          </div>
+        </div>
+        ` : ''}
+
+      </div>
+    </div>
+  </div>`;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function animateScore(el, score) {
+  if (!el) return;
+  setTimeout(() => { el.style.width = (score * 10) + '%'; }, 80);
+}
+
+// ══════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard() {
+  renderStats();
+  renderFilters();
+  renderContent();
+  document.getElementById('settingsCount').textContent = people.length;
+}
+
+function renderStats() {
+  const aplus = people.filter(p => p.hvm_tier === 'a_plus').length;
+  const a     = people.filter(p => p.hvm_tier === 'a').length;
+  const withTranscript = people.filter(p => p.transcript && p.transcript.length > 50).length;
+  const avg = people.length
+    ? (people.reduce((s,p) => s + (p.program_fit_score||0), 0) / people.length).toFixed(1)
+    : '—';
+
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-card"><div class="stat-val">${people.length}</div><div class="stat-lbl">Perfiles cargados</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--yellow)">${aplus + a}</div><div class="stat-lbl">Tier A+ y A (prioritarios)</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:var(--green)">${withTranscript}</div><div class="stat-lbl">Con transcript analizado</div></div>
+    <div class="stat-card"><div class="stat-val">${avg}</div><div class="stat-lbl">Fit score promedio</div></div>
+  `;
+}
+
+function renderFilters() {
+  const tierCounts = { all: people.length, a_plus: 0, a: 0, b: 0, c: 0 };
+  people.forEach(p => { if (p.hvm_tier && tierCounts[p.hvm_tier] !== undefined) tierCounts[p.hvm_tier]++; });
+
+  const tierChips = [
+    { key: 'all',   label: `Todos (${people.length})` },
+    { key: 'a_plus', label: `A+ (${tierCounts.a_plus})` },
+    { key: 'a',     label: `A (${tierCounts.a})` },
+    { key: 'b',     label: `B (${tierCounts.b})` },
+    { key: 'c',     label: `C (${tierCounts.c})` },
+  ];
+
+  document.getElementById('filterRow').innerHTML =
+    `<span class="filter-section-label">Tier</span>` +
+    tierChips.map(t => `
+      <button class="chip ${currentTierFilter===t.key?'active':''}" onclick="setTierFilter('${t.key}')">
+        ${t.label}
+      </button>
+    `).join('');
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  renderFilters();
+  renderContent();
+}
+
+function setTierFilter(t) {
+  currentTierFilter = t;
+  renderFilters();
+  renderContent();
+}
+
+function onSearch() {
+  searchQuery = document.getElementById('searchBox').value.toLowerCase();
+  renderContent();
+}
+
+function renderContent() {
+  let data = [...people];
+  if (currentTierFilter !== 'all') data = data.filter(p => p.hvm_tier === currentTierFilter);
+  if (currentFilter !== 'all')     data = data.filter(p => p.program === currentFilter);
+  if (searchQuery) {
+    data = data.filter(p =>
+      (p.name         || '').toLowerCase().includes(searchQuery) ||
+      (p.company      || '').toLowerCase().includes(searchQuery) ||
+      (p.industry     || '').toLowerCase().includes(searchQuery) ||
+      (p.short_summary|| '').toLowerCase().includes(searchQuery)
+    );
+  }
+
+  if (currentView === 'cards') renderCards(data);
+  else                          renderTable(data);
+}
+
+// ══════════════════════════════════════════
+// CARDS VIEW
+// ══════════════════════════════════════════
+function renderCards(data) {
+  const grid = document.getElementById('cardsGrid');
+
+  if (!data.length) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1">
+        <div class="empty">
+          <div class="empty-icon">${people.length===0?'📋':'🔍'}</div>
+          <div class="empty-title">${people.length===0?'Sin perfiles todavía':'Sin resultados'}</div>
+          <p class="empty-sub">${people.length===0?'Analiza tu primer transcript para comenzar.':'Prueba con otro filtro o búsqueda.'}</p>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const tierBarColor = { a_plus: 'var(--yellow)', a: 'rgba(233,255,123,0.5)', b: 'var(--s3)', c: 'var(--border)' };
+  const tierLabel    = { a_plus: 'A+', a: 'A', b: 'B', c: 'C' };
+  const tierClass    = { a_plus: 'tier-aplus', a: 'tier-a', b: 'tier-b', c: 'tier-c' };
+  const revLabel     = { under_200k:'<200k', '200k_2m':'200k–2M', '2m_5m':'2M–5M', '5m_20m':'5M–20M', over_20m:'>20M', unknown:'—' };
+
+  grid.innerHTML = data.map(p => {
+    const tier      = p.hvm_tier || 'c';
+    const barColor  = tierBarColor[tier] || 'var(--border)';
+    const tLabel    = tierLabel[tier]    || '?';
+    const tClass    = tierClass[tier]    || 'tier-c';
+    const firstQuote = (p.key_phrases||[]).find(q => q && q.length > 10) || '';
+    const mat        = p.profile?.maturity_level || '';
+    const hasTranscript = p.transcript && p.transcript.length > 50;
+    const revText   = revLabel[p.revenue_range] || '';
+    const location  = [p.city, p.country].filter(Boolean).join(', ');
+
+    return `
+    <div class="person-card" onclick="openModal(${p.id})">
+      <div class="card-top-bar" style="background:${barColor}"></div>
+      <div class="card-body">
+
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px">
+          <div>
+            <div class="card-name">${esc(p.name)}</div>
+            <div class="card-company">${esc(p.company) || '&nbsp;'}</div>
+          </div>
+          <span class="badge ${tClass}" style="margin-top:2px;flex-shrink:0">Tier ${tLabel}</span>
+        </div>
+
+        <div class="card-meta-row">
+          <span class="status-pill ${hasTranscript ? 'status-done' : 'status-pending'}">
+            ${hasTranscript ? '✓ Analizado' : '○ Sin transcript'}
+          </span>
+          ${revText ? `<span class="rev-tag">${revText}</span>` : ''}
+          ${location ? `<span style="font-size:10px;color:var(--t4)">${esc(location)}</span>` : ''}
+        </div>
+
+        ${firstQuote ? `<div class="card-quote">"${esc(firstQuote)}"</div>` : ''}
+
+        ${p.short_summary ? `<div class="card-summary" style="-webkit-line-clamp:3">${esc(p.short_summary)}</div>` : ''}
+
+        ${mat ? `<div class="card-profile"><span class="cpill">${esc(mat)}</span></div>` : ''}
+
+        <div style="display:flex;gap:8px;margin-top:8px">
+          ${p.email ? `<a class="card-link" href="mailto:${esc(p.email)}" onclick="event.stopPropagation()">✉ ${esc(p.email)}</a>` : ''}
+          ${p.linkedin ? `<a class="card-link" href="${esc(p.linkedin)}" target="_blank" onclick="event.stopPropagation()">↗ LinkedIn</a>` : ''}
+        </div>
+
+      </div>
+      <div class="card-footer">
+        <div style="font-size:11px;color:var(--t3)">Score HVM: <strong style="color:var(--t2)">${p.hvm_score||'—'}</strong></div>
+        <div>
+          <span class="card-score">${p.program_fit_score??'—'}</span>
+          <span class="card-score-d">/10</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// TABLE VIEW
+// ══════════════════════════════════════════
+function renderTable(data) {
+  const container = document.getElementById('tableBody');
+  document.getElementById('tableCount').textContent = `${data.length} persona${data.length!==1?'s':''}`;
+
+  if (!data.length) {
+    container.innerHTML = `
+      <div class="empty">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-title">Sin resultados</div>
+        <p class="empty-sub">Prueba con otro filtro o búsqueda.</p>
+      </div>`;
+    return;
+  }
+
+  const urgLabel = { alta:'Alta', media:'Media', baja:'Baja' };
+  const urgDot   = { alta:'var(--red)', media:'var(--orange)', baja:'var(--green)' };
+
+  container.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Persona</th>
+          <th>Programa</th>
+          <th>Perfil</th>
+          <th>Urgencia</th>
+          <th>Fit</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(p => `
+          <tr onclick="openModal(${p.id})">
+            <td>
+              <div class="td-name">${esc(p.name)}</div>
+              <div class="td-co">${esc(p.company)||'—'}</div>
+            </td>
+            <td><span class="badge bg-yellow">${esc(p.program)}</span></td>
+            <td style="color:var(--t3);max-width:200px;font-size:12px">
+              ${esc(p.profile?.maturity_level||'—')}${p.profile?.mentality_type?' · '+esc(p.profile.mentality_type):''}
+            </td>
+            <td>
+              <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${urgDot[p.urgency_level]||urgDot.media};margin-right:6px;vertical-align:middle"></span>
+              ${urgLabel[p.urgency_level]||'—'}
+            </td>
+            <td style="font-weight:800;color:var(--yellow);font-size:15px">${p.program_fit_score??'—'}<span style="font-size:11px;font-weight:400;color:var(--t3)">/10</span></td>
+            <td style="color:var(--t3)">${p.date?new Date(p.date).toLocaleDateString('es-MX',{day:'2-digit',month:'short',year:'numeric'}):'—'}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+}
+
+// ══════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════
+function openModal(id) {
+  const p = people.find(x => x.id === id);
+  if (!p) return;
+
+  const urgMap   = { alta:'bg-red', media:'bg-orange', baja:'bg-green' };
+  const urgLabel = { alta:'Urgencia Alta', media:'Urgencia Media', baja:'Urgencia Baja' };
+
+  document.getElementById('modalName').textContent = p.name;
+  document.getElementById('modalBadges').innerHTML = `
+    ${p.company ? `<span class="badge bg-gray">${esc(p.company)}</span>` : ''}
+    <span class="badge bg-yellow">${esc(p.program)}</span>
+    <span class="badge ${urgMap[p.urgency_level]||'bg-orange'}">${urgLabel[p.urgency_level]||'Media'}</span>
+  `;
+
+  document.getElementById('modalBody').innerHTML = buildAnalysisHTML(p);
+  document.getElementById('detailModal').classList.add('show');
+  animateScore(document.querySelector('#modalBody .score-fill'), p.program_fit_score);
+}
+
+function closeModal() { document.getElementById('detailModal').classList.remove('show'); }
+document.addEventListener('click', e => { if (e.target.id === 'detailModal') closeModal(); });
+
+// ══════════════════════════════════════════
+// EXPORT CSV
+// ══════════════════════════════════════════
+function exportCSV() {
+  if (!people.length) { toast('No hay datos para exportar', 'error'); return; }
+
+  const headers = [
+    'Nombre','Empresa','Programa','Urgencia','Fit Score',
+    'Resumen Ejecutivo','Madurez','Mentalidad','Limitantes',
+    'Problemas Explícitos','Objetivos','Frustraciones','Miedos/Bloqueos',
+    'Falta de Claridad','Brechas','Tipo de Ayuda','Soluciones Alto Impacto',
+    'Prioridades','Frases Clave','Perfil Completo',
+    'Recomendación de Programa','Fecha'
+  ];
+
+  const j = arr => (arr||[]).join(' | ');
+
+  const rows = people.map(p => [
+    p.name, p.company, p.program, p.urgency_level, p.program_fit_score,
+    p.short_summary,
+    p.profile?.maturity_level, p.profile?.mentality_type,
+    j(p.profile?.main_limiters),
+    j(p.explicit_needs?.problems), j(p.explicit_needs?.objectives),
+    j(p.implicit_needs?.unspoken_frustrations),
+    j(p.implicit_needs?.fears_insecurities),
+    j(p.implicit_needs?.lack_of_clarity),
+    j(p.implicit_needs?.gaps),
+    j(p.value_opportunities?.type_of_help),
+    j(p.value_opportunities?.high_impact_solutions),
+    j(p.value_opportunities?.priorities),
+    j(p.key_phrases),
+    p.profile?.summary,
+    p.program_recommendation,
+    p.date ? new Date(p.date).toLocaleDateString('es-MX') : ''
+  ]);
+
+  const csv = [headers,...rows]
+    .map(row => row.map(c => `"${String(c??'').replace(/"/g,'""')}"`).join(','))
+    .join('\n');
+
+  const blob = new Blob(['﻿'+csv], { type:'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `30X_Caracterizacion_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV exportado ✓', 'success');
+}
+
+// ══════════════════════════════════════════
+// SETTINGS
+// ══════════════════════════════════════════
+function loadSettingsView() {
+  document.getElementById('settingsKey').value     = apiKey;
+  document.getElementById('programsText').value    = programs.join('\n');
+  document.getElementById('settingsCount').textContent = people.length;
+}
+
+function clearData() {
+  if (!confirm('¿Eliminar todos los perfiles? Esta acción no se puede deshacer.')) return;
+  people = [];
+  localStorage.setItem('30x_people','[]');
+  renderDashboard();
+  loadSettingsView();
+  toast('Datos eliminados', 'success');
+}
+
+// ══════════════════════════════════════════
+// LOADING / TOAST
+// ══════════════════════════════════════════
+function showLoading(msg) {
+  document.getElementById('loadingMsg').textContent = msg;
+  document.getElementById('loadingOverlay').classList.add('show');
+}
+function setLoadingMsg(msg) { document.getElementById('loadingMsg').textContent = msg; }
+function hideLoading()      { document.getElementById('loadingOverlay').classList.remove('show'); }
+
+function toast(msg, type='info') {
+  const el   = document.getElementById('toast');
+  el.textContent = msg;
+  el.className   = `toast show ${type}`;
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 3200);
+}
+</script>
+</body>
+</html>
